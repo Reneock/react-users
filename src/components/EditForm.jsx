@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Button} from 'react-bootstrap';
 
-class UsersForm extends Component {
+class EditForm extends Component {
   constructor(props){
     super(props);
-    this.state ={name:"", email:"", gen:""}
+    this.state ={name: props.userInfo.name, 
+      email: props.userInfo.email, 
+      gen: props.userInfo.gen,
+      id: props.userInfo.id
+    }
   }
 
   handleChange=(e)=>{
@@ -16,13 +20,14 @@ class UsersForm extends Component {
 
   handleSubmit=(e)=>{
     e.preventDefault();
-    this.props.addUser(this.state);
+    this.props.editForm(this.state.id, this.state);
     this.setState({name:"", email:"", gen: ""});
+    this.props.closeModal();
   };
 
   render() {
     return (
-
+      <>
         <Form onSubmit={this.handleSubmit} style={{border:"1px solid pink", backgroundColor: "pink", height: "350px"}}>
           <Form.Group style={{width: "300px", marginTop:"20px", marginLeft:"50px"}} className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name</Form.Label>
@@ -43,8 +48,9 @@ class UsersForm extends Component {
             Submit
           </Button>
         </Form>
+      </>  
     );
   }
 }
 
-export default UsersForm;
+export default EditForm;

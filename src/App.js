@@ -11,18 +11,31 @@ class App extends Component {
   super();
   this.state ={
     users: [
-      {name:"Frimp Fos", email: "frimp@gmail.com", gen: 15},
-      {name:"Enoch Jon", email: "enoch@gmail.com", gen: 18},
-      {name:"Sun Confi", email: "sunny@gmail.com", gen: 22}
+      {name:"Frimp Fos", email: "frimp@gmail.com", gen: 15, id:"1ud"},
+      {name:"Enoch Jon", email: "enoch@gmail.com", gen: 18, id:"2ud"},
+      {name:"Sun Confi", email: "sunny@gmail.com", gen: 22, id:"3ud"}
     ]
   }
 }
 
  addNewUser=(user)=>{
+  user.id = Math.random().toString()
   this.setState({
-    users: [...this.state.users,user]
+    users: [...this.state.users, user]
   })
-  
+ }
+
+ deleteUser = (id) => {
+  let undeletedUsers = this.state.users.filter ((user) => user.id !== id);
+  this.setState({
+    users: undeletedUsers
+  })
+ }
+
+ editForm = (id, updatedUser) => {
+  this.setState({
+    users: this.state.users.map(user => user.id === id ? updatedUser : user)
+  })
  }
 
  render(){ 
@@ -34,7 +47,7 @@ class App extends Component {
              <UsersForm addUser ={this.addNewUser}/>
             </Col>
             <Col>
-             <Users usersData={this.state.users}/>
+             <Users usersData={this.state.users} deleteUser={this.deleteUser} editForm={this.editForm}/>
             </Col>
           </Row>
         </Container>
