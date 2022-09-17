@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Button} from 'react-bootstrap';
+import {addUser} from '../actions/usersActions';
+import {connect} from 'react-redux';
+import {v4 as uuid} from "uuid";
 
 class UsersForm extends Component {
   constructor(props){
@@ -16,9 +19,10 @@ class UsersForm extends Component {
 
   handleSubmit=(e)=>{
     e.preventDefault();
-    this.props.addUser(this.state);
-    this.setState({name:"", email:"", gen: ""});
-  };
+    this.props.addNewUser ({id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen});
+    console.log ({id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen});
+    this.setState({name:"", email:"", gen: "",})
+  }
 
   render() {
     return (
@@ -47,4 +51,8 @@ class UsersForm extends Component {
   }
 }
 
-export default UsersForm;
+const mapDispatchToProps =  {
+  addNewUser: addUser,
+};
+
+export default connect (null, mapDispatchToProps) (UsersForm);

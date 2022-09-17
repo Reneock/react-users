@@ -9,13 +9,7 @@ class App extends Component {
  
  constructor(props) {
   super();
-  this.state ={
-    users: [
-      {name:"Frimp Fos", email: "frimp@gmail.com", gen: 15, id:"1ud"},
-      {name:"Enoch Jon", email: "enoch@gmail.com", gen: 18, id:"2ud"},
-      {name:"Sun Confi", email: "sunny@gmail.com", gen: 22, id:"3ud"}
-    ]
-  }
+  this.state = { users: [] }
 }
 
  addNewUser=(user)=>{

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button} from 'react-bootstrap';
 
+
 class EditForm extends Component {
   constructor(props){
     super(props);
@@ -52,5 +53,6 @@ class EditForm extends Component {
     );
   }
 }
+
 
 export default EditForm;
