@@ -51,7 +51,7 @@ class UsersForm extends Component {
   }
 }
 
-const mapDispatchToProps =  {
+const mapDispatchToProps = {
   addNewUser: addUser,
 };
 
