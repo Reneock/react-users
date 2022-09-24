@@ -15,19 +15,19 @@ let usersReducer =(state=initialState, action)=>{
     case "ADD_USER":
       return {...state, users: [...state.users, action.payload] };
 
-    case "DELETE_USER":
-      const unDeletedUsers = state.users.filter ((user)=>user.id!==action.payload)
-      return {...state, users:unDeletedUsers}
-
     case "EDIT_USER":
-      const updatedUserInfo = state.users.map ((user)=>{
-        if (user.id===action.payload.updatedInfo.id){
-          return action.payload.updatedInfo;
+      const editedInfo = state.users.map ((user)=>{
+        if (user.id===action.payload.updatedUser.id){
+          return action.payload.updatedUser;
         }
         else{return user}
       })
 
-      return {...state, users:updatedUserInfo}
+      return {...state, users:editedInfo}
+
+    case "DELETE_USER":
+      const unDeletedUsers = state.users.filter ((user)=>user.id!==action.payload)
+      return {...state, users:unDeletedUsers}  
 
       default:
         return state;

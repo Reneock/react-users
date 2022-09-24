@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Card, Col, Button, Modal } from 'react-bootstrap';
 import EditForm from './EditForm';
+import { connect } from 'react-redux';
+import { deleteUser } from '../actions/usersActions';
 
 const User = (props) => {
 
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  //const dispatch = useDispatch();
 
   const handleDelete = (e) => {
     e.preventDefault();
+    //dispatch(deleteUser(props.userInfo.id));
     props.deleteUser(props.userInfo.id);
   };
 
@@ -26,7 +29,7 @@ const User = (props) => {
       </Modal>
 
       <Col md="4" style={{ marginBottom: "1rem" }}>
-        <Card style={{ backgroundColor: "purple", color: "white" }}>
+        <Card style={{ backgroundColor: "#ff5ccd", color: "white" }}>
           <Card.Body>
             <Card.Title>{props.userInfo.name}</Card.Title>
             <Card.Text>
@@ -42,4 +45,8 @@ const User = (props) => {
   );
 };
 
-export default User;
+const mapDispatchToProps = {
+  deleteUser,
+}
+
+export default connect (null, mapDispatchToProps) (User);

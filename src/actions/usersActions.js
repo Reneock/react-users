@@ -5,16 +5,17 @@ export const addUser =(newUser)=>{
   }
 }
 
-export const reduxDeleteUser = (id) =>{
+export const editUser = (updatedUser) =>{
+  return{
+    type:"EDIT_USER",
+    payload:{updatedUser}
+  }
+}
+
+export const deleteUser = (id) =>{
   return{
     type:"DELETE_USER",
     payload:id
   }
 }
 
-export const reduxEditUser = (updatedInfo) =>{
-  return{
-    type:"EDIT_USER",
-    payload:{updatedInfo}
-  }
-}
