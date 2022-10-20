@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Button} from 'react-bootstrap';
-import {addUser} from '../actions/usersActions';
-import {connect} from 'react-redux';
+//import {addUser} from '../actions/usersActions';
+//import {connect} from 'react-redux';
 import {v4 as uuid} from "uuid";
+import { doc, setDoc } from "firebase/firestore"; 
+import {db} from "../firebase/Config";
 
 class UsersForm extends Component {
   constructor(props){
@@ -17,10 +19,26 @@ class UsersForm extends Component {
     });
   };
 
-  handleSubmit=(e)=>{
+  handleSubmit= async (e)=>{
     e.preventDefault();
-    this.props.addNewUser ({id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen});
+
+    //to assist with redux state management
+    //this.props.addNewUser ({id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen});
+
+    //a variable created to contain details to be updated
+    let newUser = {id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen};
+
     console.log ({id:uuid(), name:this.state.name, email:this.state.email, gen:this.state.gen});
+
+    //using a promise
+    try{
+      await setDoc(doc(db, "users", newUser.id), newUser);
+    }
+    catch(e){
+      console.log (e);
+    }
+    
+
     this.setState({name:"", email:"", gen: "",})
   }
 
@@ -51,8 +69,7 @@ class UsersForm extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  addNewUser: addUser,
-};
+//const mapDispatchToProps = { addNewUser: addUser,};
 
-export default connect (null, mapDispatchToProps) (UsersForm);
+//export default connect (null, mapDispatchToProps) (UsersForm);
+export default UsersForm;
