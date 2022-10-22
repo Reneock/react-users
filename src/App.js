@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Users from "./components/Users";
 import UsersForm from "./components/UsersForm";
 import "./App.css";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
 import { db } from "./firebase/Config";
 import {addUser} from "./actions/usersActions";
 import {useDispatch} from "react-redux";
@@ -14,10 +14,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //the readData function can be ignored in this instance
+    
     const readData = async () => {
-      const q = query(collection(db, "users"));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      //orderBy helps with arrangement of data eg timestamp, name in an asc or desc manner
+      const q = query(collection(db, "users"), orderBy("name", "asc"));
+      onSnapshot(q, (querySnapshot) => {
         const users = [];
         querySnapshot.forEach((doc) => {
           users.push(doc.data());
@@ -27,7 +28,7 @@ function App() {
       });
     };
     readData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

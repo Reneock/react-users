@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Form, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {editUser} from '../actions/usersActions';
+import {doc, updateDoc} from 'firebase/firestore';
+import {db} from '../firebase/Config';
 
 
 
@@ -22,9 +24,13 @@ class EditForm extends Component {
     });
   };
 
-  handleSubmit=(e)=>{
+  handleSubmit= async(e)=>{
     e.preventDefault();
-    this.props.upDate ({id:this.state.id, name:this.state.name, email:this.state.email, gen:this.state.gen,});
+    let newInfo = {id:this.state.id, name:this.state.name, email:this.state.email, gen:this.state.gen};
+
+    const editingUser = doc (db, "users", this.state.id);
+    await updateDoc (editingUser, newInfo);
+   
     this.setState({name:"", email:"", gen: "",});
     this.props.closeModal();
   };
@@ -57,8 +63,6 @@ class EditForm extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  upDate: editUser,
-}
+const mapDispatchToProps = {editUser,}
 
 export default connect (null, mapDispatchToProps) (EditForm);
