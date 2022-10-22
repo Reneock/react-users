@@ -26,10 +26,15 @@ class EditForm extends Component {
 
   handleSubmit= async(e)=>{
     e.preventDefault();
-    let newInfo = {id:this.state.id, name:this.state.name, email:this.state.email, gen:this.state.gen};
 
     const editingUser = doc (db, "users", this.state.id);
-    await updateDoc (editingUser, newInfo);
+    try{
+      await updateDoc (editingUser, {id:this.state.id, name:this.state.name, email:this.state.email, gen:this.state.gen});
+    }
+    catch(e){
+      console.log (e);
+    }
+    
    
     this.setState({name:"", email:"", gen: "",});
     this.props.closeModal();
