@@ -28,13 +28,13 @@ class EditForm extends Component {
     e.preventDefault();
 
     const editingUser = doc (db, "users", this.state.id);
+
     try{
       await updateDoc (editingUser, {id:this.state.id, name:this.state.name, email:this.state.email, gen:this.state.gen});
     }
     catch(e){
       console.log (e);
     }
-    
    
     this.setState({name:"", email:"", gen: "",});
     this.props.closeModal();
