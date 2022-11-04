@@ -18,7 +18,7 @@ const Users = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-      usersData: state.users,
+      usersData: state.usersReducer.users,
     };
 };
 
